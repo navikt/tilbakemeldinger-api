@@ -7,8 +7,6 @@ require("dotenv").config({
   path: "/var/run/secrets/nais.io/vault/environment.env"
 });
 
-console.log(process.env.FOO);
-
 app.use(
   "/person/tilbakemeldinger-api/proxy",
   proxy("https://api-gw-q0.oera.no/tilbakemeldingsmottak")
