@@ -25,6 +25,7 @@ app.get("/person/tilbakemeldinger-api/internal/isReady", (req, res) =>
 app.use(
   "/person/tilbakemeldinger-api/",
   proxy(TILBAKEMELDINGSMOTTAK_URL, {
+    forwardPath: req => url.parse(req.baseUrl).path,
     proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
       proxyReqOpts.headers[
         TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_USERNAME
