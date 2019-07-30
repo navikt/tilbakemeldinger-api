@@ -18,10 +18,14 @@ app.get(`${BASE_URL}/internal/isAlive`, (req, res) => res.sendStatus(200));
 app.get(`${BASE_URL}/internal/isReady`, (req, res) => res.sendStatus(200));
 
 const onProxyReq = (proxyReq, req, res) => {
+  Object.keys(req.headers).forEach(function(key) {
+    proxyReq.setHeader(key, req.headers[key]);
+  });
   proxyReq.setHeader(
     TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_USERNAME,
     TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_PASSWORD
   );
+  proxyReq.hea;
 };
 
 app.use(
