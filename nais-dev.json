@@ -17,11 +17,11 @@
       "https://www-q0.nav.no/person/tilbakemeldinger-api"
     ],
     "liveness": {
-      "path": "/person/tilbakemeldinger-api/internal/alive",
+      "path": "/person/tilbakemeldinger-api/internal/isAlive",
       "initialDelay": 10
     },
     "readiness": {
-      "path": "/person/tilbakemeldinger-api/internal/ready",
+      "path": "/person/tilbakemeldinger-api/internal/isReady",
       "initialDelay": 10
     },
     "vault":{
