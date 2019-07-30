@@ -1,0 +1,31 @@
+{
+  "name": "tilbakemeldinger-api",
+  "version": "1.0.0",
+  "description": "Proxy mot FSS for tilbakemeldinger",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navikt/tilbakemeldinger-api.git"
+  },
+  "keywords": [
+    "proxy",
+    "fss",
+    "tilbakemeldinger",
+    "serviceklage",
+    "ros-til-nav",
+    "feil-og-mangler"
+  ],
+  "author": "Team personbruker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/navikt/tilbakemeldinger-api/issues"
+  },
+  "homepage": "https://github.com/navikt/tilbakemeldinger-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
