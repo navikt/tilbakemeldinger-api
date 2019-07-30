@@ -30,6 +30,7 @@ const onProxyReq = (proxyReq, req, res) => {
 app.use(
   proxy("/person/tilbakemeldinger-api", {
     target: TILBAKEMELDINGSMOTTAK_URL,
+    pathRewrite: { "^/person/tilbakemeldinger-api": "" },
     onProxyReq: onProxyReq,
     changeOrigin: true
   })
