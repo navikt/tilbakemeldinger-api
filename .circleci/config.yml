@@ -1,0 +1,136 @@
+version: 2.1
+jobs:
+  build-react-app:
+    docker:
+      - image: circleci/node:11.7.0
+    steps:
+      - checkout
+      - run:
+          name: Installer npm pakker
+          command: |
+            npm ci
+
+  deploy-til-dev:
+    docker:
+      - image: circleci/node:11.7.0
+    steps:
+      - checkout
+      - sett-miljovariabler
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+      - run:
+          name: Bygger Docker image
+          command: docker build -t "$DOCKER_IMAGE_NAME" .
+      - run:
+          name: Pusher Docker image
+          command: |
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+            docker push "$DOCKER_IMAGE_NAME"
+      - run:
+          name: Deployer til dev
+          command: |
+            curl -i \
+                -X POST \
+                -d '{
+                     "ref": "'"$COMMIT_SHORT"'",
+                     "description": "Automated deployment request for tilbakemeldinger-api from team personbruker",
+                     "environment": "dev-sbs",
+                     "required_contexts": [],
+                     "payload": {
+                       "version": [1, 0, 0],
+                       "team": "personbruker",
+                       "kubernetes": {
+                         "resources": ['"$(cat nais-dev.json | jq '.spec.image = "'$DOCKER_IMAGE_NAME'"')"']
+                       }
+                     }
+                   }' \
+                -H "Accept: application/vnd.github.ant-man-preview+json" \
+                -u "$GH_USER":"$GH_TK" \
+                https://api.github.com/repos/navikt/tilbakemeldinger-api/deployments
+
+  deploy-til-prod:
+    docker:
+      - image: circleci/node:11.7.0
+    steps:
+      - checkout
+      - sett-miljovariabler
+      - run:
+          name: Deployer til prod
+          command: |
+            curl -i \
+                -X POST \
+                -d '{
+                     "ref": "'"$COMMIT_SHORT"'",
+                     "description": "Automated deployment request for tilbakemeldinger-api from team personbruker",
+                     "environment": "prod-sbs",
+                     "required_contexts": [],
+                     "payload": {
+                       "version": [1, 0, 0],
+                       "team": "personbruker",
+                       "kubernetes": {
+                         "resources": ['"$(cat nais-prod.json | jq '.spec.image = "'$DOCKER_IMAGE_NAME'"')"']
+                       }
+                     }
+                   }' \
+                -H "Accept: application/vnd.github.ant-man-preview+json" \
+                -u "$GH_USER":"$GH_TK" \
+                https://api.github.com/repos/navikt/tilbakemeldinger-api/deployments
+
+commands:
+  sett-miljovariabler:
+    steps:
+      - run:
+          name: Setter miljøvariabler
+          command: |
+            echo "export COMMIT_SHORT='$(git rev-parse --short HEAD)'" >> $BASH_ENV
+            echo "export DOCKER_IMAGE_VERSION='$CIRCLE_WORKFLOW_ID-${CIRCLE_BRANCH////-}$CIRCLE_TAG'" >> $BASH_ENV
+      - run:
+          name: Definerer navn på docker-image
+          command: |
+            echo "export DOCKER_IMAGE_NAME='$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$DOCKER_IMAGE_VERSION'" >> $BASH_ENV
+
+workflows:
+  bygg-og-deploy:
+    jobs:
+      - build-react-app:
+          filters:
+            tags:
+              only: /.*/
+      - bekreft-deploy-til-dev:
+          type: approval
+          requires:
+            - build-react-app
+          filters:
+            branches:
+              ignore: master
+      - deploy-til-dev:
+          name: manuell-deploy-til-dev
+          requires:
+            - bekreft-deploy-til-dev
+      - deploy-til-dev:
+          name: automatisk-deploy-til-dev
+          requires:
+            - build-react-app
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: master
+      - bekreft-deploy-til-prod:
+          type: approval
+          requires:
+            - automatisk-deploy-til-dev
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - deploy-til-prod:
+          requires:
+            - bekreft-deploy-til-prod
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
