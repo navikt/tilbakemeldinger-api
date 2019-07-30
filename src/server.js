@@ -1,4 +1,4 @@
-const proxy = require("express-http-proxy");
+const proxy = require("http-proxy-middleware");
 const express = require("express");
 const app = express();
 const port = 8080;
@@ -22,16 +22,17 @@ app.get("/person/tilbakemeldinger-api/internal/isReady", (req, res) =>
   res.sendStatus(200)
 );
 
+const onProxyReq = (proxyReq, req, res) => {
+  proxyReq.setHeader(
+    TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_USERNAME,
+    TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_PASSWORD
+  );
+};
+
 app.use(
-  "/person/tilbakemeldinger-api/",
-  proxy(TILBAKEMELDINGSMOTTAK_URL, {
-    forwardPath: req => url.parse(req.baseUrl).path,
-    proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
-      proxyReqOpts.headers[
-        TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_USERNAME
-      ] = TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_PASSWORD;
-      return proxyReqOpts;
-    }
+  proxy("/person/tilbakemeldinger-api/", {
+    target: TILBAKEMELDINGSMOTTAK_URL,
+    onProxyReq: onProxyReq
   })
 );
 
