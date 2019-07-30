@@ -13,8 +13,6 @@ const {
   TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_PASSWORD
 } = process.env;
 
-console.log(process.env);
-
 app.get("/person/tilbakemeldinger-api/internal/isAlive", (req, res) =>
   res.sendStatus(200)
 );
@@ -30,9 +28,10 @@ const onProxyReq = (proxyReq, req, res) => {
 };
 
 app.use(
-  proxy("/person/tilbakemeldinger-api/", {
+  proxy("/person/tilbakemeldinger-api", {
     target: TILBAKEMELDINGSMOTTAK_URL,
-    onProxyReq: onProxyReq
+    onProxyReq: onProxyReq,
+    changeOrigin: true
   })
 );
 
