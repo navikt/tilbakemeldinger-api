@@ -26,6 +26,10 @@
   },
   "homepage": "https://github.com/navikt/tilbakemeldinger-api#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-http-proxy": "^1.5.1"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
   }
 }
