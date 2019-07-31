@@ -24,9 +24,9 @@ const onProxyReq = (proxyReq, req, res) => {
     TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_PASSWORD
   );
   Object.keys(req.headers).forEach(key => {
+    console.log(`Setting header ${key}=${req.headers[key]}`);
     proxyReq.setHeader(key, req.headers[key]);
   });
-  console.log(proxyReq.headers);
 };
 
 app.use(
