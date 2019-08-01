@@ -21,7 +21,7 @@ app.get(`${BASE_URL}/internal/isAlive`, (req, res) => res.sendStatus(200));
 app.get(`${BASE_URL}/internal/isReady`, (req, res) => res.sendStatus(200));
 
 app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
-  res.send({ personnr: decodeJWT(req.cookies["selvbetjening-idtoken"]).sub })
+  res.send({ fodselsnr: decodeJWT(req.cookies["selvbetjening-idtoken"]).sub })
 );
 
 const onProxyReq = (proxyReq, req, res) => {
