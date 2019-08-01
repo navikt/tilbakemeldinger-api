@@ -15,7 +15,11 @@ const {
 } = process.env;
 
 app.get(`${BASE_URL}/internal/isAlive`, (req, res) => res.sendStatus(200));
-app.get(`${BASE_URL}/internal/isReady`, (req, res) => res.sendStatus(200));
+app.get(`${BASE_URL}/internal/isReady`, (req, res) => res.sendStatus(200));¨
+
+app.get(`${BASE_URL}/personnr`, (req, res) =>
+  res.send({ personnr: req.cookies["selvbetjening-idtoken"] })
+);
 
 const onProxyReq = (proxyReq, req, res) => {
   proxyReq.setHeader(
