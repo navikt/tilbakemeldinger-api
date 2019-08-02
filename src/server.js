@@ -25,16 +25,16 @@ app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
 );
 
 const onProxyReq = (proxyReq, req, res) => {
+  const authToken = req.cookies["selvbetjening-idtoken"];
+
+  if (authToken) {
+    setHeader("Authorization", `Bearer ${authToken}`);
+  }
+
   proxyReq.setHeader(
     TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_USERNAME,
     TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_PASSWORD
   );
-
-  const authToken = req.cookies["selvbetjening-idtoken"];
-
-  if (authCookie) {
-    setHeader("Authorization", `Bearer ${authToken}`);
-  }
 
   Object.keys(req.headers).forEach(key => {
     console.log(`Setting header ${key}=${req.headers[key]}`);
