@@ -39,6 +39,8 @@ const onProxyReq = (proxyReq, req, res) => {
   Object.keys(req.headers).forEach(key => {
     proxyReq.setHeader(key, req.headers[key]);
   });
+
+  console.log(proxyReq.headers);
 };
 
 app.use(
