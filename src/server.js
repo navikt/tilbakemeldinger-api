@@ -28,7 +28,7 @@ const onProxyReq = (proxyReq, req, res) => {
   const authToken = req.cookies["selvbetjening-idtoken"];
 
   if (authToken) {
-    setHeader("Authorization", `Bearer ${authToken}`);
+    proxyReq.setHeader("Authorization", `Bearer ${authToken}`);
   }
 
   proxyReq.setHeader(
