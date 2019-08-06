@@ -19,16 +19,16 @@ app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
 app.use(
   proxy(`${BASE_URL}/enheter`, {
     target: process.env.ENHETERRS_URL,
-    pathRewrite: { "^/person/tilbakemeldinger-api": "" },
+    pathRewrite: { "^/person/tilbakemeldinger-api/enheter": "" },
     onProxyReq: setEnheterProxyHeaders,
     changeOrigin: true
   })
 );
 
 app.use(
-  proxy(`${BASE_URL}`, {
+  proxy(`${BASE_URL}/mottak`, {
     target: process.env.TILBAKEMELDINGSMOTTAK_URL,
-    pathRewrite: { "^/person/tilbakemeldinger-api": "" },
+    pathRewrite: { "^/person/tilbakemeldinger-api/mottak": "" },
     onProxyReq: setMottakProxyHeaders,
     changeOrigin: true
   })
