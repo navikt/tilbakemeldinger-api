@@ -26,7 +26,7 @@ app.use(
 );
 
 app.use(
-  proxy(BASE_URL, {
+  proxy(`${BASE_URL}`, {
     target: process.env.TILBAKEMELDINGSMOTTAK_URL,
     pathRewrite: { "^/person/tilbakemeldinger-api": "" },
     onProxyReq: setMottakProxyHeaders,
