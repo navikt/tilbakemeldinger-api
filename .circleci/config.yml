@@ -10,29 +10,29 @@ jobs:
           command: |
             npm ci
 
-deploy-til-dev:
-  docker:
-    - image: navikt/deployment-cli:latest
-  steps:
-    - checkout
-    - sett-miljovariabler
-    - setup_remote_docker
-    - attach_workspace:
-        at: .
-    - run:
-        name: Bygger Docker image
-        command: |
-          echo $IMAGE_NAME
-          docker build -t $IMAGE_NAME .
-    - run:
-        name: Pusher Docker image
-        command: |
-          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-          docker push $IMAGE_NAME
-    - deploy:
-        til: dev-sbs
-        ingress1: https://$REPO_NAME.nais.oera-q.local/person/$REPO_NAME
-        ingress2: https://www-q0.nav.no/person/$REPO_NAME
+  deploy-til-dev:
+    docker:
+      - image: navikt/deployment-cli:latest
+    steps:
+      - checkout
+      - sett-miljovariabler
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+      - run:
+          name: Bygger Docker image
+          command: |
+            echo $IMAGE_NAME
+            docker build -t $IMAGE_NAME .
+      - run:
+          name: Pusher Docker image
+          command: |
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push $IMAGE_NAME
+      - deploy:
+          til: dev-sbs
+          ingress1: https://$REPO_NAME.nais.oera-q.local/person/$REPO_NAME
+          ingress2: https://www-q0.nav.no/person/$REPO_NAME
 
   deploy-til-prod:
     docker:
