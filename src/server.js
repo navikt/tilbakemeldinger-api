@@ -2,12 +2,14 @@ const proxy = require("http-proxy-middleware");
 const cookies = require("cookie-parser");
 const express = require("express");
 const decodeJWT = require("jwt-decode");
-const app = express();
-const port = 8080;
 const BASE_URL = "/person/tilbakemeldinger-api";
 const VAULT_PATH = "/var/run/secrets/nais.io/vault/environment.env";
 const dotenv = require("dotenv").config({ path: VAULT_PATH });
 const { setEnheterProxyHeaders, setMottakProxyHeaders } = require("./headers");
+const { getStsToken } = require("./ststoken");
+
+const app = express();
+const port = 8080;
 
 app.use(cookies());
 app.get(`${BASE_URL}/internal/isAlive`, (req, res) => res.sendStatus(200));
@@ -26,6 +28,7 @@ app.use(
 );
 
 app.use(
+  getStsToken(`${BASE_URL}/mottak`),
   proxy(`${BASE_URL}/mottak`, {
     target: process.env.TILBAKEMELDINGSMOTTAK_URL,
     pathRewrite: { "^/person/tilbakemeldinger-api/mottak": "" },
