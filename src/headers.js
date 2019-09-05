@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 /*
   Set headers for proxy requests
  */
