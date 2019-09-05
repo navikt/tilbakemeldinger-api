@@ -11,15 +11,20 @@ const setEnheterProxyHeaders = (proxyReq, req, res) => {
 };
 
 const setMottakProxyHeaders = (proxyReq, req, res) => {
-  const authToken = req.cookies["selvbetjening-idtoken"];
+  const userToken = req.cookies["selvbetjening-idtoken"];
   const stsToken = req.access_token;
+  const authTokens = [];
 
   if (stsToken) {
-    proxyReq.setHeader("Authorization", `Bearer ${stsToken}`);
+    authTokens.push(`Bearer ${stsToken}`);
   }
 
-  if (authToken) {
-    proxyReq.setHeader("Nav-Selvbetjening-Token", `Bearer ${authToken}`);
+  if (userToken) {
+    authTokens.push(`Bearer ${userToken}`);
+  }
+
+  if (authTokens.length > 0) {
+    proxyReq.setHeader("Authorization", authTokens.join());
   }
 
   proxyReq.setHeader(
