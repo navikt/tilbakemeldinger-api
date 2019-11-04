@@ -1,6 +1,6 @@
 {
   "name": "tilbakemeldinger-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Proxy mot FSS for tilbakemeldinger",
   "main": "src/server.js",
   "scripts": {
