@@ -34,7 +34,7 @@ app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
 
 // API
 app.get(`${BASE_URL}/alerts`, (req, res) => {
-  const query = '*[_type == "alert"] {...}';
+  const query = "*[_type == 'alert' && !(_id in path('drafts.**'))] {...}";
   const params = { minSeats: 2 };
 
   client
