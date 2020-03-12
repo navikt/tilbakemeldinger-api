@@ -1,4 +1,5 @@
 // Load environment
+const VAULT_PATH = "/var/run/secrets/nais.io/vault/environment.env";
 require("dotenv").config({
   path: process.env.NODE_ENV === "production" ? VAULT_PATH : ".env"
 });
@@ -9,7 +10,6 @@ const cookies = require("cookie-parser");
 const express = require("express");
 const decodeJWT = require("jwt-decode");
 const BASE_URL = "/person/pb-kontakt-oss-api";
-const VAULT_PATH = "/var/run/secrets/nais.io/vault/environment.env";
 const { setEnheterProxyHeaders, setMottakProxyHeaders } = require("./headers");
 const { getStsToken } = require("./ststoken");
 const sanityClient = require("@sanity/client");
