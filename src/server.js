@@ -2,7 +2,7 @@ const proxy = require("http-proxy-middleware");
 const cookies = require("cookie-parser");
 const express = require("express");
 const decodeJWT = require("jwt-decode");
-const BASE_URL = "/person/tilbakemeldinger-api";
+const BASE_URL = "/person/pb-kontakt-oss-api";
 const VAULT_PATH = "/var/run/secrets/nais.io/vault/environment.env";
 const dotenv = require("dotenv").config({ path: VAULT_PATH });
 const { setEnheterProxyHeaders, setMottakProxyHeaders } = require("./headers");
@@ -21,7 +21,7 @@ app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
 app.use(
   proxy(`${BASE_URL}/enheter`, {
     target: process.env.ENHETERRS_URL,
-    pathRewrite: { "^/person/tilbakemeldinger-api/enheter": "" },
+    pathRewrite: { [`^${BASE_URL}/enheter`]: "" },
     onProxyReq: setEnheterProxyHeaders,
     changeOrigin: true
   })
@@ -31,7 +31,7 @@ app.use(
   getStsToken(`${BASE_URL}/mottak`),
   proxy(`${BASE_URL}/mottak`, {
     target: process.env.TILBAKEMELDINGSMOTTAK_URL,
-    pathRewrite: { "^/person/tilbakemeldinger-api/mottak": "" },
+    pathRewrite: { [`^${BASE_URL}/mottak`]: "" },
     onProxyReq: setMottakProxyHeaders,
     changeOrigin: true
   })
