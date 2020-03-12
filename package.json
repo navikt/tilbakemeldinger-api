@@ -1,5 +1,5 @@
 {
-  "name": "tilbakemeldinger-api",
+  "name": "pb-kontakt-oss-api",
   "version": "1.0.1",
   "description": "Proxy mot FSS for tilbakemeldinger",
   "main": "src/server.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/navikt/tilbakemeldinger-api.git"
+    "url": "git+https://github.com/navikt/pb-kontakt-oss-api.git"
   },
   "keywords": [
     "proxy",
@@ -22,9 +22,9 @@
   "author": "Team personbruker",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/navikt/tilbakemeldinger-api/issues"
+    "url": "https://github.com/navikt/pb-kontakt-oss-api/issues"
   },
-  "homepage": "https://github.com/navikt/tilbakemeldinger-api#readme",
+  "homepage": "https://github.com/navikt/pb-kontakt-oss-api#readme",
   "dependencies": {
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.0.0",
