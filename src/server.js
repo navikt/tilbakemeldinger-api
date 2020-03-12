@@ -1,22 +1,50 @@
+// Load environment
+require("dotenv").config({
+  path: process.env.NODE_ENV === "production" ? VAULT_PATH : ".env"
+});
+
+// Imports
 const proxy = require("http-proxy-middleware");
 const cookies = require("cookie-parser");
 const express = require("express");
 const decodeJWT = require("jwt-decode");
 const BASE_URL = "/person/pb-kontakt-oss-api";
 const VAULT_PATH = "/var/run/secrets/nais.io/vault/environment.env";
-const dotenv = require("dotenv").config({ path: VAULT_PATH });
 const { setEnheterProxyHeaders, setMottakProxyHeaders } = require("./headers");
 const { getStsToken } = require("./ststoken");
+const sanityClient = require("@sanity/client");
 
-const app = express();
+// Settings
 const port = 8080;
+const app = express();
+const client = sanityClient({
+  projectId: process.env.SANITY_PROJECT_ID,
+  dataset: process.env.SANITY_DATASET,
+  token: process.env.SANITY_TOKEN,
+  useCdn: false
+});
 
+// Nais
 app.use(cookies());
 app.get(`${BASE_URL}/internal/isAlive`, (req, res) => res.sendStatus(200));
 app.get(`${BASE_URL}/internal/isReady`, (req, res) => res.sendStatus(200));
 app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
   res.send({ fodselsnr: decodeJWT(req.cookies["selvbetjening-idtoken"]).sub })
 );
+
+// API
+app.get(`${BASE_URL}/opening-hours`, (req, res) => {
+  const query = '*[_type == "bike" && seats >= $minSeats] {name, seats}';
+  const params = { minSeats: 2 };
+
+  client
+    .fetch(query, params)
+    .then(bikes => {
+      console.log("Bikes with more than one seat:");
+      res.send(bikes);
+    })
+    .catch(err => res.send(err));
+});
 
 app.use(
   proxy(`${BASE_URL}/enheter`, {
