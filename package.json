@@ -4,7 +4,7 @@
   "description": "Proxy mot FSS for tilbakemeldinger",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "nodemon src/server.js",
     "test": "exit 0"
   },
   "repository": {
@@ -35,6 +35,7 @@
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
+    "nodemon": "^2.0.2",
     "prettier": "^1.18.2"
   }
 }

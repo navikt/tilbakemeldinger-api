@@ -33,8 +33,8 @@ app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
 );
 
 // API
-app.get(`${BASE_URL}/opening-hours`, (req, res) => {
-  const query = '*[_type == "bike" && seats >= $minSeats] {name, seats}';
+app.get(`${BASE_URL}/alerts`, (req, res) => {
+  const query = '*[_type == "alert"] {...}';
   const params = { minSeats: 2 };
 
   client
