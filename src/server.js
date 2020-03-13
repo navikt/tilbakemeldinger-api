@@ -51,6 +51,15 @@ app.get(`${BASE_URL}/faq`, (req, res) => {
     .catch(error => res.send(error));
 });
 
+app.get(`${BASE_URL}/channels`, (req, res) => {
+  const query = "*[_type == 'channel' && !(_id in path('drafts.**'))] {...}";
+  const params = { minSeats: 2 };
+  client
+    .fetch(query, params)
+    .then(channels => res.send(channels))
+    .catch(error => res.send(error));
+});
+
 app.use(
   proxy(`${BASE_URL}/enheter`, {
     target: process.env.ENHETERRS_URL,
