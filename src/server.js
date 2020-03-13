@@ -73,7 +73,7 @@ app.get(`${BASE_URL}/faq`, (req, res) => {
 
 app.get(`${BASE_URL}/channels`, (req, res) => {
   const query = "*[_type == 'channel' && !(_id in path('drafts.**'))] {...}";
-  const channels = cache.get("channel");
+  const channels = cache.get("channels");
   if (channels) {
     res.send(channels);
   } else {
@@ -81,7 +81,7 @@ app.get(`${BASE_URL}/channels`, (req, res) => {
       .fetch(query)
       .then(result => {
         console.log("Setting channel cache");
-        cache.set("channel", result);
+        cache.set("channels", result);
         res.send(result);
       })
       .catch(error => res.send(error));
