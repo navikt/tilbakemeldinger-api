@@ -35,27 +35,24 @@ app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
 // API
 app.get(`${BASE_URL}/alerts`, (req, res) => {
   const query = "*[_type == 'alert' && !(_id in path('drafts.**'))] {...}";
-  const params = { minSeats: 2 };
   client
-    .fetch(query, params)
+    .fetch(query)
     .then(alerts => res.send(alerts))
     .catch(error => res.send(error));
 });
 
 app.get(`${BASE_URL}/faq`, (req, res) => {
   const query = "*[_type == 'faq' && !(_id in path('drafts.**'))] {...}";
-  const params = { minSeats: 2 };
   client
-    .fetch(query, params)
+    .fetch(query)
     .then(faq => res.send(faq))
     .catch(error => res.send(error));
 });
 
 app.get(`${BASE_URL}/channels`, (req, res) => {
   const query = "*[_type == 'channel' && !(_id in path('drafts.**'))] {...}";
-  const params = { minSeats: 2 };
   client
-    .fetch(query, params)
+    .fetch(query)
     .then(channels => res.send(channels))
     .catch(error => res.send(error));
 });
