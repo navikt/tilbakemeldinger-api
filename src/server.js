@@ -5,6 +5,7 @@ require("dotenv").config({
 });
 
 // Imports
+const NodeCache = require("node-cache");
 const proxy = require("http-proxy-middleware");
 const cookies = require("cookie-parser");
 const express = require("express");
@@ -32,29 +33,64 @@ app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
   res.send({ fodselsnr: decodeJWT(req.cookies["selvbetjening-idtoken"]).sub })
 );
 
+// Cache setup
+const cache = new NodeCache();
+
 // API
 app.get(`${BASE_URL}/alerts`, (req, res) => {
   const query = "*[_type == 'alert' && !(_id in path('drafts.**'))] {...}";
-  client
-    .fetch(query)
-    .then(alerts => res.send(alerts))
-    .catch(error => res.send(error));
+  const alerts = cache.get("alerts");
+  if (alerts) {
+    res.send(alerts);
+  } else {
+    client
+      .fetch(query)
+      .then(result => {
+        console.log("Setting alerts cache");
+        cache.set("alerts", result);
+        res.send(result);
+      })
+      .catch(error => res.send(error));
+  }
 });
 
 app.get(`${BASE_URL}/faq`, (req, res) => {
   const query = "*[_type == 'faq' && !(_id in path('drafts.**'))] {...}";
-  client
-    .fetch(query)
-    .then(faq => res.send(faq))
-    .catch(error => res.send(error));
+  const faq = cache.get("faq");
+  if (faq) {
+    res.send(faq);
+  } else {
+    client
+      .fetch(query)
+      .then(result => {
+        console.log("Setting faq cache");
+        cache.set("faq", result);
+        res.send(result);
+      })
+      .catch(error => res.send(error));
+  }
 });
 
 app.get(`${BASE_URL}/channels`, (req, res) => {
   const query = "*[_type == 'channel' && !(_id in path('drafts.**'))] {...}";
-  client
-    .fetch(query)
-    .then(channels => res.send(channels))
-    .catch(error => res.send(error));
+  const channels = cache.get("channel");
+  if (channels) {
+    res.send(channels);
+  } else {
+    client
+      .fetch(query)
+      .then(result => {
+        console.log("Setting channel cache");
+        cache.set("channel", result);
+        res.send(result);
+      })
+      .catch(error => res.send(error));
+  }
+});
+
+app.get(`${BASE_URL}/clear-cache`, (req, res) => {
+  console.log("Clearing cache");
+  cache.flushAll();
 });
 
 app.use(
