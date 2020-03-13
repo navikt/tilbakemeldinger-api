@@ -91,6 +91,7 @@ app.get(`${BASE_URL}/channels`, (req, res) => {
 app.get(`${BASE_URL}/clear-cache`, (req, res) => {
   console.log("Clearing cache");
   cache.flushAll();
+  res.send({ result: "Cleared cache" });
 });
 
 app.use(
