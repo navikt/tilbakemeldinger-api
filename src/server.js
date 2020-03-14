@@ -1,5 +1,6 @@
 // Load environment
 const VAULT_PATH = "/var/run/secrets/nais.io/vault/environment.env";
+require("console-stamp")(console, "[HH:MM:ss.l]");
 require("dotenv").config({
   path: process.env.NODE_ENV === "production" ? VAULT_PATH : ".env"
 });
@@ -43,7 +44,11 @@ const cache = new NodeCache(
   }[process.env.SANITY_DATASET]
 );
 
-// API
+// Cache debug
+cache.on("set", key => console.log(`Setting cache ${key}`));
+cache.on("del", key => console.log(`Clearing cache ${key}`));
+
+// Api
 app.get(`${BASE_URL}/alerts`, (req, res) => {
   const query = "*[_type == 'alert' && !(_id in path('drafts.**'))] {...}";
   const alerts = cache.get("alerts");
@@ -53,7 +58,6 @@ app.get(`${BASE_URL}/alerts`, (req, res) => {
     client
       .fetch(query)
       .then(result => {
-        console.log("Setting alerts cache");
         cache.set("alerts", result);
         res.send(result);
       })
@@ -70,7 +74,6 @@ app.get(`${BASE_URL}/faq`, (req, res) => {
     client
       .fetch(query)
       .then(result => {
-        console.log("Setting faq cache");
         cache.set("faq", result);
         res.send(result);
       })
@@ -87,7 +90,6 @@ app.get(`${BASE_URL}/channels`, (req, res) => {
     client
       .fetch(query)
       .then(result => {
-        console.log("Setting channel cache");
         cache.set("channels", result);
         res.send(result);
       })
@@ -98,9 +100,10 @@ app.get(`${BASE_URL}/channels`, (req, res) => {
 // Sanity Webhook called every time a published
 // document is changed, created or deleted.
 app.post(`${BASE_URL}/clear-cache`, (req, res) => {
-  console.log("Clearing cache");
   cache.flushAll();
-  res.send({ result: "Cleared cache" });
+  res.send({
+    result: "Cache cleared"
+  });
 });
 
 // Proxied requests
