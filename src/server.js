@@ -34,7 +34,14 @@ app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
 );
 
 // Cache setup
-const cache = new NodeCache();
+const cache = new NodeCache(
+  {
+    // Cleared each minute
+    staging: { stdTTL: 60, checkperiod: 20 },
+    // Cleared each day and by Sanity Webhook
+    production: { stdTTL: 86400, checkperiod: 3600 }
+  }[process.env.SANITY_DATASET]
+);
 
 // API
 app.get(`${BASE_URL}/alerts`, (req, res) => {
@@ -88,12 +95,15 @@ app.get(`${BASE_URL}/channels`, (req, res) => {
   }
 });
 
-app.get(`${BASE_URL}/clear-cache`, (req, res) => {
+// Sanity Webhook called every time a published
+// document is changed, created or deleted.
+app.post(`${BASE_URL}/clear-cache`, (req, res) => {
   console.log("Clearing cache");
   cache.flushAll();
   res.send({ result: "Cleared cache" });
 });
 
+// Proxied requests
 app.use(
   proxy(`${BASE_URL}/enheter`, {
     target: process.env.ENHETERRS_URL,
@@ -113,4 +123,6 @@ app.use(
   })
 );
 
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+app.listen(port, () => {
+  console.log(`App listening on port ${port}!`);
+});
