@@ -66,15 +66,26 @@ const setSanityThemes = async client => {
         { _key: "okonomi", _type: "theme" },
         { _key: "eures", _type: "theme" }
       ]
+    },
+    {
+      _id: "write",
+      themes: [
+        { _key: "jobbsoker", _type: "theme" },
+        { _key: "syk", _type: "theme" },
+        { _key: "familie", _type: "theme" },
+        { _key: "ufor", _type: "theme" },
+        { _key: "pensjonist", _type: "theme" },
+        { _key: "hjelpemidler", _type: "theme" }
+      ]
     }
   ];
 
   // Compare arrays
   baseChannels.forEach(baseChannel => {
-    const baseThemes = baseChannel.themes;
-    const curThemes = curChannels.find(
-      curChannel => curChannel._id === baseChannel._id
-    ).themes;
+    const baseThemes = baseChannel.themes || [];
+    const curThemes =
+      curChannels.find(curChannel => curChannel._id === baseChannel._id)
+        .themes || [];
 
     // Filter out existing themes
     const addThemes = baseThemes.filter(baseTheme => {
