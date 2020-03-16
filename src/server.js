@@ -13,18 +13,24 @@ const express = require("express");
 const decodeJWT = require("jwt-decode");
 const BASE_URL = "/person/pb-kontakt-oss-api";
 const { setEnheterProxyHeaders, setMottakProxyHeaders } = require("./headers");
+const { setSanityChannels, setSanityThemes } = require("./sanity");
+const { setSanityPermissions } = require("./sanity");
 const { getStsToken } = require("./ststoken");
 const sanityClient = require("@sanity/client");
 
 // Settings
 const port = 8080;
 const app = express();
-const client = sanityClient({
+const config = {
   projectId: process.env.SANITY_PROJECT_ID,
   dataset: process.env.SANITY_DATASET,
   token: process.env.SANITY_TOKEN,
   useCdn: false
-});
+};
+const client = sanityClient(config);
+setSanityPermissions(client);
+setSanityChannels(client);
+setSanityThemes(client);
 
 // Nais
 app.use(cookies());
