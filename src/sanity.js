@@ -58,6 +58,7 @@ const setSanityThemes = async client => {
     {
       _id: "chat",
       themes: [
+        { _key: "arbeidsgiver", _type: "theme" },
         { _key: "jobbsoker", _type: "theme" },
         { _key: "syk", _type: "theme" },
         { _key: "familie", _type: "theme" },
