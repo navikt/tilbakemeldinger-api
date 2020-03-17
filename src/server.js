@@ -13,24 +13,18 @@ const express = require("express");
 const decodeJWT = require("jwt-decode");
 const BASE_URL = "/person/pb-kontakt-oss-api";
 const { setEnheterProxyHeaders, setMottakProxyHeaders } = require("./headers");
-const { setSanityChannels, setSanityThemes } = require("./sanity");
-const { setSanityPermissions } = require("./sanity");
 const { getStsToken } = require("./ststoken");
 const sanityClient = require("@sanity/client");
 
 // Settings
 const port = 8080;
 const app = express();
-const config = {
+const client = sanityClient({
   projectId: process.env.SANITY_PROJECT_ID,
   dataset: process.env.SANITY_DATASET,
   token: process.env.SANITY_TOKEN,
   useCdn: false
-};
-const client = sanityClient(config);
-setSanityPermissions(client);
-setSanityChannels(client);
-setSanityThemes(client);
+});
 
 // Nais
 app.use(cookies());
@@ -97,6 +91,22 @@ app.get(`${BASE_URL}/channels`, (req, res) => {
       .fetch(query)
       .then(result => {
         cache.set("channels", result);
+        res.send(result);
+      })
+      .catch(error => res.send(error));
+  }
+});
+
+app.get(`${BASE_URL}/themes`, (req, res) => {
+  const query = "*[_type == 'theme' && !(_id in path('drafts.**'))] {...}";
+  const channels = cache.get("themes");
+  if (channels) {
+    res.send(channels);
+  } else {
+    client
+      .fetch(query)
+      .then(result => {
+        cache.set("themes", result);
         res.send(result);
       })
       .catch(error => res.send(error));
