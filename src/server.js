@@ -13,6 +13,7 @@ const express = require("express");
 const decodeJWT = require("jwt-decode");
 const BASE_URL = "/person/pb-kontakt-oss-api";
 const { setEnheterProxyHeaders, setMottakProxyHeaders } = require("./headers");
+const { setSanityPermissions } = require("./sanity");
 const { getStsToken } = require("./ststoken");
 const sanityClient = require("@sanity/client");
 
@@ -111,6 +112,15 @@ app.get(`${BASE_URL}/themes`, (req, res) => {
       })
       .catch(error => res.send(error));
   }
+});
+
+// Update Sanity permissions
+// OBS: Must be updated in each environment / dataset
+app.get(`${BASE_URL}/update-permissions`, (req, res) => {
+  setSanityPermissions(client);
+  res.send({
+    result: `Updated Sanity permissions`
+  });
 });
 
 // Sanity Webhook called every time a published
