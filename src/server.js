@@ -40,7 +40,6 @@ const cache = new NodeCache(
   {
     // Cleared each minute
     staging: { stdTTL: 60, checkperiod: 20 },
-    // Cleared each day and by Sanity Webhook
     production: { stdTTL: 60, checkperiod: 20 }
   }[process.env.SANITY_DATASET]
 );
