@@ -48,6 +48,7 @@ const setSanityPermissions = client => {
 
   return permissions.map(group =>
     client
+      .createIfNotExists(group._id)
       .patch(group._id)
       .set({ grants: group.grants, members: group.members })
       .commit()
