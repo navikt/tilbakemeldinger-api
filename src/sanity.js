@@ -46,12 +46,22 @@ const setSanityPermissions = client => {
     }
   ];
 
-  return permissions.map(group =>
+  permissions.map(group => {
+    // Create group
     client
       .createIfNotExists({
         _id: group._id,
         _type: "system.group"
       })
+      .then(res => {
+        console.log(`Group ${group._id} created or exists`);
+      })
+      .catch(error => {
+        console.log(`Error ${group._id}: ${JSON.stringify(error)}`);
+      });
+
+    // Update permissions
+    client
       .patch(group._id)
       .set({
         grants: group.grants,
@@ -63,8 +73,8 @@ const setSanityPermissions = client => {
       })
       .catch(error => {
         console.log(`Error ${group._id}: ${JSON.stringify(error)}`);
-      })
-  );
+      });
+  });
 };
 
 module.exports = {
