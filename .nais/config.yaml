@@ -2,36 +2,31 @@
 apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
-  name: {{reponame}}
-  namespace: default
+  name: pb-kontakt-oss-api
+  namespace: {{namespace}}
   labels:
-    team: {{team}}
+    team: personbruker
 spec:
-  image: navikt/{{reponame}}:{{version}}
-  team: {{team}}
+  image: {{image}}:{{version}}
+  team: personbruker
   port: 8080
   ingresses:
-  {{#each ingresses }}
-    - {{ this }}
+  {{#each ingresses as |url|}}
+     - {{url}}
   {{/each}}
   liveness:
-    path: {{baseurl}}/internal/isAlive
+    path: /person/pb-kontakt-oss-api/internal/isAlive
     initialDelay: 10
   readiness:
-    path: {{baseurl}}/internal/isAlive
+    path: /person/pb-kontakt-oss-api/internal/isReady
     initialDelay: 10
-  vault:
-    enabled: true
   replicas:
     min: 2
     max: 4
   webproxy: true
-  env:
-    - name: NODE_EXTRA_CA_CERTS
-      value: "/etc/ssl/ca-bundle.pem"
   resources:
     limits:
       cpu: '3'
-      memory: 1500Mi
+      memory: 768Mi
     requests:
-      memory: 1500Mi
+      memory: 512Mi
