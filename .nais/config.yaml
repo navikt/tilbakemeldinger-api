@@ -20,10 +20,15 @@ spec:
   readiness:
     path: /person/pb-kontakt-oss-api/internal/isReady
     initialDelay: 10
+  g:
+    enabled: true
   replicas:
     min: 2
     max: 4
   webproxy: true
+  env:
+    - name: NODE_EXTRA_CA_CERTS
+      value: "/etc/ssl/ca-bundle.pem"
   resources:
     limits:
       cpu: '3'
