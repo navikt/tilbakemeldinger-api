@@ -20,7 +20,7 @@ spec:
   readiness:
     path: /person/pb-kontakt-oss-api/internal/isReady
     initialDelay: 10
-  g:
+  vault:
     enabled: true
   replicas:
     min: 2
