@@ -1,13 +1,41 @@
-Kontakt oss API
-================
+# Kontakt oss API
 
-Proxy mot FSS for tilbakemeldinger
+![Deploy-to-prod](https://github.com/navikt/pb-kontakt-oss-api/workflows/Deploy-to-prod/badge.svg) <br>
+![Deploy-to-q0](https://github.com/navikt/pb-kontakt-oss-api/workflows/Deploy-to-q0/badge.svg)
+![Deploy-to-q1](https://github.com/navikt/pb-kontakt-oss-api/workflows/Deploy-to-q1/badge.svg)
+![Deploy-to-q2](https://github.com/navikt/pb-kontakt-oss-api/workflows/Deploy-to-q2/badge.svg)
+![Deploy-to-q6](https://github.com/navikt/pb-kontakt-oss-api/workflows/Deploy-to-q6/badge.svg)
 
-Kort beskrivelse av hva prosjektet dreier seg om.
+- Backend for Sanity.io spørringer for pb-kontakt-oss.
+- FSS Proxy for tilbakemeldingsmottak og enhetsinformasjon.
 
 # Komme i gang
 
-Hvordan bygge, teste og kjøre koden viss aktuelt.
+Hent repoet fra github
+
+```
+git clone https://github.com/navikt/pb-kontakt-oss-api.git
+```
+
+Kopier .env.sample til .env og skriv inn reelle miljøvariabler:
+
+```
+SANITY_TOKEN // Skaffes fra sanity.io, spør om tilgang
+TILBAKEMELDINGSMOTTAK_URL // URL til API-endepunktet for tilbakemeldingsmottak
+ENHETERRS_URL // URL til API-endepunktet for enhetsinformasjon
+```
+
+Installer nødvendige avhengigheter:
+
+```
+npm install
+```
+
+Start applikasjonen lokalt:
+
+```
+npm run start
+```
 
 ---
 
