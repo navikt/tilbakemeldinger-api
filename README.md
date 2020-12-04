@@ -39,6 +39,19 @@ npm run start
 
 ---
 
+## Deployering
+
+- Q6: Tag på formatet `vX.X.X-dev`.
+- Q1, Q2, Q6: Tag på formatet `vX.X.X-test`.
+- Q0, PROD: Tag på formatet `vX.X.X-prod`.
+
+Eksempel:
+
+```
+git tag v1.0.0-test
+git push && git push --tags
+```
+
 # Henvendelser
 
 Enten:
