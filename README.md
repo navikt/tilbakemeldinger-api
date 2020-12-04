@@ -41,7 +41,7 @@ npm run start
 ## Deployering
 
 - Q6: Tag på formatet `vX.X.X-dev`.
-- Q1, Q2, Q6: Tag på formatet `vX.X.X-test`.
+- Q1, Q6: Tag på formatet `vX.X.X-test`.
 - Q0, PROD: Tag på formatet `vX.X.X-prod`.
 
 Eksempel:
