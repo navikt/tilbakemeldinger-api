@@ -26,18 +26,18 @@
   },
   "homepage": "https://github.com/navikt/pb-kontakt-oss-api#readme",
   "dependencies": {
-    "@sanity/client": "^1.149.2",
+    "@sanity/client": "^2.0.9",
     "console-stamp": "^0.2.9",
-    "cookie-parser": "^1.4.4",
-    "dotenv": "^8.0.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "http-proxy-middleware": "^0.19.1",
-    "jwt-decode": "^2.2.0",
-    "node-cache": "^5.1.0",
-    "node-fetch": "^2.6.0"
+    "http-proxy-middleware": "^1.0.6",
+    "jwt-decode": "^3.1.2",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2",
-    "prettier": "^1.18.2"
+    "nodemon": "^2.0.6",
+    "prettier": "^2.2.1"
   }
 }
