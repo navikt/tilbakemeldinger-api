@@ -2,12 +2,12 @@
 const VAULT_PATH = "/var/run/secrets/nais.io/vault/environment.env";
 require("console-stamp")(console, "[HH:MM:ss.l]");
 require("dotenv").config({
-  path: process.env.NODE_ENV === "production" ? VAULT_PATH : ".env"
+  path: process.env.NODE_ENV === "production" ? VAULT_PATH : ".env",
 });
 
 // Imports
 const NodeCache = require("node-cache");
-const proxy = require("http-proxy-middleware");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 const cookies = require("cookie-parser");
 const express = require("express");
 const decodeJWT = require("jwt-decode");
@@ -24,7 +24,7 @@ const client = sanityClient({
   projectId: process.env.SANITY_PROJECT_ID,
   dataset: process.env.SANITY_DATASET,
   token: process.env.SANITY_TOKEN,
-  useCdn: false
+  useCdn: false,
 });
 
 // Nais
@@ -40,13 +40,13 @@ const cache = new NodeCache(
   {
     // Cleared each minute
     staging: { stdTTL: 60, checkperiod: 20 },
-    production: { stdTTL: 60, checkperiod: 20 }
+    production: { stdTTL: 60, checkperiod: 20 },
   }[process.env.SANITY_DATASET]
 );
 
 // Cache debug
-cache.on("set", key => console.log(`Setting cache ${key}`));
-cache.on("del", key => console.log(`Clearing cache ${key}`));
+cache.on("set", (key) => console.log(`Setting cache ${key}`));
+cache.on("del", (key) => console.log(`Clearing cache ${key}`));
 
 // Api
 app.get(`${BASE_URL}/alerts`, (req, res) => {
@@ -57,11 +57,11 @@ app.get(`${BASE_URL}/alerts`, (req, res) => {
   } else {
     client
       .fetch(query)
-      .then(result => {
+      .then((result) => {
         cache.set("alerts", result);
         res.send(result);
       })
-      .catch(error => res.send(error));
+      .catch((error) => res.send(error));
   }
 });
 
@@ -73,11 +73,11 @@ app.get(`${BASE_URL}/faq`, (req, res) => {
   } else {
     client
       .fetch(query)
-      .then(result => {
+      .then((result) => {
         cache.set("faq", result);
         res.send(result);
       })
-      .catch(error => res.send(error));
+      .catch((error) => res.send(error));
   }
 });
 
@@ -89,11 +89,11 @@ app.get(`${BASE_URL}/channels`, (req, res) => {
   } else {
     client
       .fetch(query)
-      .then(result => {
+      .then((result) => {
         cache.set("channels", result);
         res.send(result);
       })
-      .catch(error => res.send(error));
+      .catch((error) => res.send(error));
   }
 });
 
@@ -105,11 +105,11 @@ app.get(`${BASE_URL}/themes`, (req, res) => {
   } else {
     client
       .fetch(query)
-      .then(result => {
+      .then((result) => {
         cache.set("themes", result);
         res.send(result);
       })
-      .catch(error => res.send(error));
+      .catch((error) => res.send(error));
   }
 });
 
@@ -118,7 +118,7 @@ app.get(`${BASE_URL}/themes`, (req, res) => {
 app.get(`${BASE_URL}/update-permissions`, (req, res) => {
   setSanityPermissions(client);
   res.send({
-    result: `Updated Sanity permissions`
+    result: `Updated Sanity permissions`,
   });
 });
 
@@ -127,27 +127,27 @@ app.get(`${BASE_URL}/update-permissions`, (req, res) => {
 app.post(`${BASE_URL}/clear-cache`, (req, res) => {
   cache.flushAll();
   res.send({
-    result: "Cache cleared"
+    result: "Cache cleared",
   });
 });
 
 // Proxied requests
 app.use(
-  proxy(`${BASE_URL}/enheter`, {
+  createProxyMiddleware(`${BASE_URL}/enheter`, {
     target: process.env.ENHETERRS_URL,
     pathRewrite: { [`^${BASE_URL}/enheter`]: "" },
     onProxyReq: setEnheterProxyHeaders,
-    changeOrigin: true
+    changeOrigin: true,
   })
 );
 
 app.use(
   getStsToken(`${BASE_URL}/mottak`),
-  proxy(`${BASE_URL}/mottak`, {
+  createProxyMiddleware(`${BASE_URL}/mottak`, {
     target: process.env.TILBAKEMELDINGSMOTTAK_URL,
     pathRewrite: { [`^${BASE_URL}/mottak`]: "" },
     onProxyReq: setMottakProxyHeaders,
-    changeOrigin: true
+    changeOrigin: true,
   })
 );
 
