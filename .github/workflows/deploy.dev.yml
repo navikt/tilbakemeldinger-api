@@ -1,8 +1,7 @@
-name: Deploy-to-q6
+name: Deploy-to-q1
 on:
   push:
     tags:
-      - "v*-test"
       - "v*-dev"
 jobs:
   deploy:
@@ -34,9 +33,9 @@ jobs:
       - name: Generate nais variables
         run: |
           cat > .nais/vars.yaml <<EOF
-          namespace: q6
+          namespace: personbruker
           ingresses:
-            - https://www-q6.nav.no/person/pb-kontakt-oss-api
+            - https://www.dev.nav.no/person/pb-kontakt-oss-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           EOF
