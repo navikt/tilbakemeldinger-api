@@ -47,12 +47,8 @@ git push && git push --tags
 
 # Henvendelser
 
-Enten:
-Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub
-
-Eller:
-Spørsmål knyttet til koden eller prosjektet kan stilles til teamalias@nav.no
+Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/orgs/navikt/teams/personbruker
 
 ## For NAV-ansatte
 
-Interne henvendelser kan sendes via Slack i kanalen #teamkanal.
+Interne henvendelser kan sendes via Slack i kanalen #team-personbruker.
