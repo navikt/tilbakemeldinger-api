@@ -63,3 +63,4 @@ typings/
 # IntelliJ
 .idea
 /pb-kontakt-oss-api.iml
+/tilbakemeldinger-api.iml

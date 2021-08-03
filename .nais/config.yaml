@@ -2,7 +2,7 @@
 apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
-  name: pb-kontakt-oss-api
+  name: tilbakemeldinger-api
   namespace: {{namespace}}
   labels:
     team: personbruker
@@ -15,10 +15,10 @@ spec:
      - {{url}}
   {{/each}}
   liveness:
-    path: /person/pb-kontakt-oss-api/internal/isAlive
+    path: /person/tilbakemeldinger-api/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /person/pb-kontakt-oss-api/internal/isReady
+    path: /person/tilbakemeldinger-api/internal/isReady
     initialDelay: 10
   vault:
     enabled: true

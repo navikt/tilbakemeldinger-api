@@ -35,7 +35,7 @@ jobs:
           cat > .nais/vars.yaml <<EOF
           namespace: personbruker
           ingresses:
-            - https://www.dev.nav.no/person/pb-kontakt-oss-api
+            - https://www.dev.nav.no/person/tilbakemeldinger-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           EOF

@@ -10,7 +10,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const cookies = require("cookie-parser");
 const express = require("express");
 const decodeJWT = require("jwt-decode");
-const BASE_URL = "/person/pb-kontakt-oss-api";
+const BASE_URL = "/person/tilbakemeldinger-api";
 const { setEnheterProxyHeaders, setMottakProxyHeaders } = require("./headers");
 const { getStsToken } = require("./ststoken");
 
