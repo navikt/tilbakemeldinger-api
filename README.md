@@ -1,6 +1,6 @@
 # Tilbakemeldinger API
 
-![Deploy-to-prod](https://github.com/navikt/pb-kontakt-oss-api/workflows/Deploy-to-prod/badge.svg) | ![Deploy-to-dev](https://github.com/navikt/pb-kontakt-oss-api/workflows/Deploy-to-dev/badge.svg)
+![Deploy-to-prod](https://github.com/navikt/tilbakemeldinger-api/workflows/Deploy-to-prod/badge.svg) | ![Deploy-to-dev](https://github.com/navikt/tilbakemeldinger-api/workflows/Deploy-to-dev/badge.svg)
 
 FSS Proxy for tilbakemeldingsmottak og enhetsinformasjon.
 
@@ -9,7 +9,7 @@ FSS Proxy for tilbakemeldingsmottak og enhetsinformasjon.
 Hent repoet fra github
 
 ```
-git clone https://github.com/navikt/pb-kontakt-oss-api.git
+git clone https://github.com/navikt/tilbakemeldinger-api.git
 ```
 
 Kopier .env.sample til .env og skriv inn reelle miljøvariabler:

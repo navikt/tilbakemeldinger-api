@@ -35,10 +35,10 @@ jobs:
       - name: Generate nais variables
         run: |
           cat > .nais/vars.yaml <<EOF
-          namespace: default
+          namespace: personbruker
           ingresses:
-            - https://pb-kontakt-oss-api.nais.oera.no
-            - https://www.nav.no/person/pb-kontakt-oss-api
+            - https://tilbakemeldinger-api.nais.oera.no
+            - https://www.nav.no/person/tilbakemeldinger-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           EOF
