@@ -1,6 +1,7 @@
 # Tilbakemeldinger API
 
-![Deploy-to-prod](https://github.com/navikt/tilbakemeldinger-api/workflows/Deploy-to-prod/badge.svg) | ![Deploy-to-dev](https://github.com/navikt/tilbakemeldinger-api/workflows/Deploy-to-dev/badge.svg)
+![Deploy til prod](https://github.com/navikt/tilbakemeldinger-api/workflows/Deploy-to-prod/badge.svg) <br>
+![Deploy til dev](https://github.com/navikt/tilbakemeldinger-api/workflows/Deploy-to-dev/badge.svg) <br>
 
 FSS Proxy for tilbakemeldingsmottak og enhetsinformasjon.
 
@@ -33,17 +34,13 @@ npm run start
 
 ---
 
-## Deployering
+## Deploy til dev-miljø
 
-- Dev: Tag på formatet `vX.X.X-dev`.
-- Prod: Tag på formatet `vX.X.X-prod`.
+[Deploy-to-dev](https://github.com/navikt/nav-enonicxp-frontend/actions/workflows/deploy.dev.yml) -> Run workflow -> Velg branch -> Run workflow
 
-Eksempel:
+## Prodsetting
 
-```
-git tag v1.0.0-test
-git push && git push --tags
-```
+Publiser en ny release på master for å starte deploy til prod
 
 # Henvendelser
 
