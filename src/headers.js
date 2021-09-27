@@ -2,6 +2,8 @@
   Set headers for proxy requests
  */
 
+console.log(process.env.TILBAKEMELDINGER_API_ENHETERRS_APIKEY_USERNAME);
+
 const setEnheterProxyHeaders = (proxyReq, req, res) => {
   proxyReq.setHeader(
     process.env.TILBAKEMELDINGER_API_ENHETERRS_APIKEY_USERNAME,

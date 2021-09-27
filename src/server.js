@@ -15,8 +15,6 @@ const { getStsToken } = require("./ststoken");
 const port = 8080;
 const app = express();
 
-console.log(process.env.ENHETERRS_URL);
-
 // Nais
 app.use(cookies());
 app.get(`${BASE_URL}/internal/isAlive`, (req, res) => res.sendStatus(200));
