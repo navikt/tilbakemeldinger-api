@@ -1,9 +1,6 @@
 // Load environment
-const VAULT_PATH = "/var/run/secrets/nais.io/vault/environment.env";
 require("console-stamp")(console, "[HH:MM:ss.l]");
-require("dotenv").config({
-  path: process.env.NODE_ENV === "production" ? VAULT_PATH : ".env",
-});
+require("dotenv").config();
 
 // Imports
 const { createProxyMiddleware } = require("http-proxy-middleware");
@@ -17,6 +14,8 @@ const { getStsToken } = require("./ststoken");
 // Settings
 const port = 8080;
 const app = express();
+
+console.log(process.env.ENHETERRS_URL);
 
 // Nais
 app.use(cookies());
