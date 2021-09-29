@@ -23,8 +23,6 @@ app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
   res.send({ fodselsnr: decodeJWT(req.cookies["selvbetjening-idtoken"]).sub })
 );
 
-console.log(`Urls: ${process.env.ENHETERRS_URL} ${process.env.TILBAKEMELDINGSMOTTAK_URL}`)
-
 // Proxied requests
 app.use(
   createProxyMiddleware(`${BASE_URL}/enheter`, {
