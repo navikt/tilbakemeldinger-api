@@ -29,6 +29,7 @@ jobs:
           SRVTILBAKEMELDINGER_API_PASSWORD: ${{ secrets.SRVTILBAKEMELDINGER_API_PASSWORD }}
         run: |
           cat > .env <<EOF
+          ENV=prod
           ENHETERRS_URL=https://api-gw.oera.no/oppdaterenhetsinfo/api/hentenheter/
           TILBAKEMELDINGSMOTTAK_URL=https://api-gw.oera.no/tilbakemeldingsmottak/rest/
           SECURITY_TOKEN_SERVICE_TOKEN_URL=https://api-gw.oera.no/security-token-service/rest/v1/sts/token/
