@@ -23,11 +23,12 @@ app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
   res.send({ fodselsnr: decodeJWT(req.cookies["selvbetjening-idtoken"]).sub })
 );
 
-if (process.env.ENV === 'dev') {
-    app.use((req, res, next) => {
-        res.setHeader('Access-Control-Allow-Origin', 'https://person.dev.nav.no');
-        next();
-    })
+if (process.env.ENV === "dev") {
+  app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "https://person.dev.nav.no");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    next();
+  });
 }
 
 // Proxied requests
