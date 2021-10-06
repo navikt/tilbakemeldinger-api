@@ -1,11 +1,11 @@
-name: Deploy-to-dev
+name: Deploy-to-dev-sbs
 on:
   workflow_dispatch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: dev-gcp:personbruker
+    environment: dev-sbs:personbruker
     steps:
       - uses: actions/checkout@v1
       - name: Define build environment
@@ -56,13 +56,13 @@ jobs:
           cat > .nais/vars.yaml <<EOF
           namespace: personbruker
           ingresses:
-            - https://person.dev.nav.no/person/tilbakemeldinger-api
+            - https://www.dev.nav.no/person/tilbakemeldinger-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:
-          CLUSTER: dev-gcp
+          CLUSTER: dev-sbs
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: .nais/config.yaml
           VARS: .nais/vars.yaml
