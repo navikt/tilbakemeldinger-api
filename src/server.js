@@ -6,6 +6,7 @@ require("dotenv").config();
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const cookies = require("cookie-parser");
 const express = require("express");
+const cors = require("cors");
 const decodeJWT = require("jwt-decode");
 const BASE_URL = "/person/tilbakemeldinger-api";
 const { setEnheterProxyHeaders, setMottakProxyHeaders } = require("./headers");
@@ -15,21 +16,23 @@ const { getStsToken } = require("./ststoken");
 const port = 8080;
 const app = express();
 
+if (process.env.ENV === "dev") {
+  app.use(
+    cors({
+      origin: ["https://person.dev.nav.no", "https://www.dev.nav.no"],
+      credentials: true,
+    })
+  );
+}
+
 // Nais
 app.use(cookies());
 app.get(`${BASE_URL}/internal/isAlive`, (req, res) => res.sendStatus(200));
 app.get(`${BASE_URL}/internal/isReady`, (req, res) => res.sendStatus(200));
+
 app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
   res.send({ fodselsnr: decodeJWT(req.cookies["selvbetjening-idtoken"]).sub })
 );
-
-if (process.env.ENV === "dev") {
-  app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "https://person.dev.nav.no");
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    next();
-  });
-}
 
 // Proxied requests
 app.use(
