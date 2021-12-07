@@ -27,7 +27,7 @@
   "homepage": "https://github.com/navikt/tilbakemeldinger-api#readme",
   "dependencies": {
     "console-stamp": "^3.0.2",
-    "cookie-parser": "^1.4.5",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
