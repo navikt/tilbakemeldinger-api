@@ -5,11 +5,6 @@ const fetch = require("node-fetch");
 
 const getStsToken = context => async (req, res, next) => {
   if (req.originalUrl.includes(context)) {
-    const {
-      TILBAKEMELDINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_USERNAME,
-      TILBAKEMELDINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_PASSWORD
-    } = process.env;
-
     const STS_BASIC_AUTH = Buffer.from(
       `${process.env.SRVTILBAKEMELDINGER_API_USERNAME}:${process.env.SRVTILBAKEMELDINGER_API_PASSWORD}`
     ).toString("base64");
@@ -17,7 +12,6 @@ const getStsToken = context => async (req, res, next) => {
     const STS_HEADERS = {
       Authorization: `Basic ${STS_BASIC_AUTH}`,
       "Nav-Consumer-Id": "tilbakemeldinger-api",
-      [TILBAKEMELDINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_USERNAME]: TILBAKEMELDINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_PASSWORD
     };
 
     const STS_OPTIONS = {

@@ -9,7 +9,7 @@ const express = require("express");
 const cors = require("cors");
 const decodeJWT = require("jwt-decode");
 const BASE_URL = "/person/tilbakemeldinger-api";
-const { setEnheterProxyHeaders, setMottakProxyHeaders } = require("./headers");
+const { setMottakProxyHeaders } = require("./headers");
 const { getStsToken } = require("./ststoken");
 
 // Settings
@@ -39,7 +39,6 @@ app.use(
   createProxyMiddleware(`${BASE_URL}/enheter`, {
     target: process.env.ENHETERRS_URL,
     pathRewrite: { [`^${BASE_URL}/enheter`]: "" },
-    onProxyReq: setEnheterProxyHeaders,
     changeOrigin: true,
   })
 );
