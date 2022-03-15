@@ -15,10 +15,10 @@ spec:
      - {{url}}
   {{/each}}
   liveness:
-    path: /person/tilbakemeldinger-api/internal/isAlive
+    path: /internal/isAlive
     initialDelay: 10
   readiness:
-    path: /person/tilbakemeldinger-api/internal/isReady
+    path: /internal/isReady
     initialDelay: 10
   replicas:
     min: 2
