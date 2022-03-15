@@ -51,6 +51,7 @@ jobs:
             - https://tilbakemeldinger-api.dev-fss-pub.nais.io
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
+          gcp-cluster: dev-gcp
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:

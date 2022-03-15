@@ -24,6 +24,12 @@ spec:
     min: 2
     max: 4
   webproxy: true
+  accessPolicy:
+    inbound:
+      rules:
+        - application: tilbakemeldinger
+          namespace: personbruker
+          cluster: { { gcp-cluster } }
   env:
     - name: NODE_EXTRA_CA_CERTS
       value: "/etc/ssl/ca-bundle.pem"
