@@ -8,7 +8,6 @@ const cookies = require("cookie-parser");
 const express = require("express");
 const cors = require("cors");
 const decodeJWT = require("jwt-decode");
-const BASE_URL = "/person/tilbakemeldinger-api";
 const { setMottakProxyHeaders } = require("./headers");
 const { getStsToken } = require("./ststoken");
 
@@ -27,27 +26,27 @@ if (process.env.ENV === "dev") {
 
 // Nais
 app.use(cookies());
-app.get(`${BASE_URL}/internal/isAlive`, (req, res) => res.sendStatus(200));
-app.get(`${BASE_URL}/internal/isReady`, (req, res) => res.sendStatus(200));
+app.get(`/internal/isAlive`, (req, res) => res.sendStatus(200));
+app.get(`/internal/isReady`, (req, res) => res.sendStatus(200));
 
-app.get(`${BASE_URL}/fodselsnr`, (req, res) =>
+app.get(`/fodselsnr`, (req, res) =>
   res.send({ fodselsnr: decodeJWT(req.cookies["selvbetjening-idtoken"]).sub })
 );
 
 // Proxied requests
 app.use(
-  createProxyMiddleware(`${BASE_URL}/enheter`, {
+  createProxyMiddleware(`/enheter`, {
     target: process.env.ENHETERRS_URL,
-    pathRewrite: { [`^${BASE_URL}/enheter`]: "" },
+    pathRewrite: { [`^/enheter`]: "" },
     changeOrigin: true,
   })
 );
 
 app.use(
-  getStsToken(`${BASE_URL}/mottak`),
-  createProxyMiddleware(`${BASE_URL}/mottak`, {
+  getStsToken(`/mottak`),
+  createProxyMiddleware(`/mottak`, {
     target: process.env.TILBAKEMELDINGSMOTTAK_URL,
-    pathRewrite: { [`^${BASE_URL}/mottak`]: "" },
+    pathRewrite: { [`^/mottak`]: "" },
     onProxyReq: setMottakProxyHeaders,
     changeOrigin: true,
   })
