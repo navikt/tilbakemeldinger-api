@@ -3,7 +3,11 @@
  */
 
 const setMottakProxyHeaders = (proxyReq, req, res) => {
-    const userToken = req.cookies["selvbetjening-idtoken"];
+    let userToken = req.headers["Authorization"];
+    if (userToken.startsWith("Bearer ")) {
+        userToken = userToken.substring(7, userToken.length)
+    }
+
     const stsToken = req.access_token;
     const authTokens = [];
 
