@@ -29,10 +29,6 @@ app.use(cookies());
 app.get(`/internal/isAlive`, (req, res) => res.sendStatus(200));
 app.get(`/internal/isReady`, (req, res) => res.sendStatus(200));
 
-app.get(`/fodselsnr`, (req, res) =>
-  res.send({ fodselsnr: decodeJWT(req.cookies["selvbetjening-idtoken"]).sub })
-);
-
 // Proxied requests
 app.use(
   createProxyMiddleware(`/enheter`, {
