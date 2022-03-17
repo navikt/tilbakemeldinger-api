@@ -8,6 +8,8 @@ const setMottakProxyHeaders = (proxyReq, req, res) => {
         userToken = userToken.substring(7, userToken.length)
     }
 
+    console.log("Mottak proxy truffet")
+
     const stsToken = req.access_token;
     const authTokens = [];
 

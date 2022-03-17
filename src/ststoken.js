@@ -4,6 +4,7 @@ const fetch = require("node-fetch");
  */
 
 const getStsToken = context => async (req, res, next) => {
+  console.log("Sts-metode truffet")
   if (req.originalUrl.includes(context)) {
     const STS_BASIC_AUTH = Buffer.from(
       `${process.env.SRVTILBAKEMELDINGER_API_USERNAME}:${process.env.SRVTILBAKEMELDINGER_API_PASSWORD}`
