@@ -35,6 +35,8 @@ spec:
       value: "/etc/ssl/ca-bundle.pem"
   envFrom:
     - secret: tilbakemeldinger
+  vault:
+    enabled: true
   resources:
     limits:
       cpu: '3'
