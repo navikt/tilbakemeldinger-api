@@ -22,10 +22,12 @@ const setMottakProxyHeaders = (proxyReq, req, res) => {
 
     if (stsToken) {
         authTokens.push(`Bearer ${stsToken}`);
+        console.log("Pushed sts token: " + stsToken.substring(0, 10))
     }
 
     if (userToken) {
         authTokens.push(`Bearer ${userToken}`);
+        console.log("Pushed user token: " + userToken.substring(0, 10))
     }
 
     if (authTokens.length > 0) {
