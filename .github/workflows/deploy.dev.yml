@@ -19,8 +19,6 @@ jobs:
           echo "IMAGE_VERSION=$(echo ${GITHUB_WORKFLOW})-$(echo ${GITHUB_SHA})" >> $GITHUB_ENV
           echo "GITHUB_TOKEN=$(echo ${GITHUB_TOKEN})" >> $GITHUB_ENV
       - name: Define app environmment
-        env:
-          SRVTILBAKEMELDINGER_API_PASSWORD: ${{ secrets.SRVTILBAKEMELDINGER_API_PASSWORD }}
         run: |
           cat > .env <<EOF
           ENV=dev
@@ -28,7 +26,6 @@ jobs:
           TILBAKEMELDINGSMOTTAK_URL=https://tilbakemeldingsmottak-q1.dev.intern.nav.no/tilbakemeldingsmottak/rest/
           SECURITY_TOKEN_SERVICE_TOKEN_URL=https://security-token-service.dev.adeo.no/rest/v1/sts/token/
           SRVTILBAKEMELDINGER_API_USERNAME=srvtilbakemeldinge
-          SRVTILBAKEMELDINGER_API_PASSWORD=$SRVTILBAKEMELDINGER_API_PASSWORD
           EOF
       - uses: actions/cache@v2
         with:

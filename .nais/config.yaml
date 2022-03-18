@@ -33,6 +33,8 @@ spec:
   env:
     - name: NODE_EXTRA_CA_CERTS
       value: "/etc/ssl/ca-bundle.pem"
+  envFrom:
+    - secret: tilbakemeldinger
   resources:
     limits:
       cpu: '3'
