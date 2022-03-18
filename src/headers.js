@@ -7,7 +7,11 @@ const setMottakProxyHeaders = (proxyReq, req, res) => {
     console.log("Url: " + req.url)
     let userToken = req.headers.authorization;
 
-    userToken && console.log("Token i setMottakProxyHeaders: " + userToken.substring(0, 30))
+    if (userToken) {
+        console.log("Token i setMottakProxyHeaders: " + userToken.substring(0, 30))
+    } else {
+        console.log("Token i setMottakProxyHeaders ikke funnet")
+    }
 
     if (userToken && userToken.startsWith("Bearer ")) {
         userToken = userToken.substring(7, userToken.length)
