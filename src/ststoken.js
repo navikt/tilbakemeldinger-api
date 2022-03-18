@@ -13,6 +13,7 @@ const getStsToken = context => async (req, res, next) => {
 
   console.log("Username: " + process.env.SRVTILBAKEMELDINGER_API_USERNAME)
   console.log("Password: " + process.env.SRVTILBAKEMELDINGER_API_PASSWORD.substring(0, 4))
+  console.log("Pw length: " + process.env.SRVTILBAKEMELDINGER_API_PASSWORD.length)
 
   if (req.originalUrl.includes(context)) {
     const STS_BASIC_AUTH = Buffer.from(
