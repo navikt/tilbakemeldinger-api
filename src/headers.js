@@ -3,6 +3,8 @@
  */
 
 const setMottakProxyHeaders = (proxyReq, req, res) => {
+    console.log("Request: " + req.host)
+    console.log("Host: " + req.url)
     let userToken = req.headers.authorization;
 
     if (userToken && userToken.startsWith("Bearer ")) {
@@ -27,6 +29,8 @@ const setMottakProxyHeaders = (proxyReq, req, res) => {
     Object.keys(req.headers).forEach(key => {
         proxyReq.setHeader(key, req.headers[key]);
     });
+
+    console.log("Headers satt ok")
 };
 
 module.exports = {

@@ -12,7 +12,7 @@ const { setMottakProxyHeaders } = require("./headers");
 const { getStsToken } = require("./ststoken");
 
 // Settings
-const port = 8080;
+const port = 8081;
 const app = express();
 
 if (process.env.ENV === "dev") {
