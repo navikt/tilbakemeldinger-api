@@ -4,6 +4,10 @@
 
 const setMottakProxyHeaders = (proxyReq, req, res) => {
     let userToken = req.headers["Authorization"];
+
+    userToken && console.log("Auth header 1: " + userToken.substring(0, 20))
+    console.log("Auth header 2: " + req.authorization.substring(0, 20))
+
     if (userToken && userToken.startsWith("Bearer ")) {
         userToken = userToken.substring(7, userToken.length)
     }

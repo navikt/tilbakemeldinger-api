@@ -43,7 +43,7 @@ app.use(
   createProxyMiddleware(`/mottak`, {
     target: process.env.TILBAKEMELDINGSMOTTAK_URL,
     pathRewrite: { [`^/mottak`]: "" },
-    onProxyReq: setMottakProxyHeaders,
+    onProxyReq: console.log("Proxy truffet") && setMottakProxyHeaders,
     changeOrigin: true,
   })
 );
