@@ -3,7 +3,7 @@
  */
 
 const setMottakProxyHeaders = (proxyReq, req, res) => {
-    console.log("Host: " + req.host)
+    console.log("Host: " + req.hostname)
     console.log("Url: " + req.url)
     let userToken = req.headers.authorization;
 
@@ -40,6 +40,10 @@ const setMottakProxyHeaders = (proxyReq, req, res) => {
 
     console.log("Headers satt ok")
     console.log(authTokens.length)
+
+    console.log("Proxy host: " + proxyReq.host)
+    console.log("Proxy url: " + proxyReq.path)
+    console.log("Proxy protocol: " + proxyReq.protocol)
 };
 
 module.exports = {
