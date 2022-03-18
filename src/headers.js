@@ -31,6 +31,7 @@ const setMottakProxyHeaders = (proxyReq, req, res) => {
     });
 
     console.log("Headers satt ok")
+    console.log(authTokens.length)
 };
 
 module.exports = {
