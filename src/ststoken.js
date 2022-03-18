@@ -10,6 +10,10 @@ const getStsToken = context => async (req, res, next) => {
   } else {
     console.log("Token i request ikke funnet")
   }
+
+  console.log("Username: " + process.env.SRVTILBAKEMELDINGER_API_USERNAME)
+  console.log("Password: " + process.env.SRVTILBAKEMELDINGER_API_PASSWORD.substring(0, 4))
+
   if (req.originalUrl.includes(context)) {
     const STS_BASIC_AUTH = Buffer.from(
       `${process.env.SRVTILBAKEMELDINGER_API_USERNAME}:${process.env.SRVTILBAKEMELDINGER_API_PASSWORD}`
