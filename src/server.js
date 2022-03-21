@@ -7,7 +7,6 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const cookies = require("cookie-parser");
 const express = require("express");
 const cors = require("cors");
-const decodeJWT = require("jwt-decode");
 const { setMottakProxyHeaders } = require("./headers");
 const { getStsToken } = require("./ststoken");
 
