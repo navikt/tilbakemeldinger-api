@@ -23,11 +23,6 @@ const getStsToken = context => async (req, res, next) => {
       .then(stsRes => stsRes.json())
       .then(stsRes => {
         req.access_token = stsRes.access_token;
-        if (stsRes.access_token) {
-          console.log("Sts token: " + stsRes.access_token.substring(0, 30))
-        } else {
-          console.log("Sts token ikke funnet")
-        }
         next();
       })
       .catch(error => {
