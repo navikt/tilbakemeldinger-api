@@ -4,17 +4,6 @@ const fetch = require("node-fetch");
  */
 
 const getStsToken = context => async (req, res, next) => {
-  console.log("Sts-metode truffet")
-  if (req.headers.authorization) {
-    console.log("Token i request: " + req.headers.authorization.substring(0, 30))
-  } else {
-    console.log("Token i request ikke funnet")
-  }
-
-  console.log("Username: " + process.env.SRVTILBAKEMELDINGER_API_USERNAME)
-  console.log("Password: " + process.env.SRVTILBAKEMELDINGER_API_PASSWORD.substring(0, 4))
-  console.log("Pw length: " + process.env.SRVTILBAKEMELDINGER_API_PASSWORD.length)
-
   if (req.originalUrl.includes(context)) {
     const STS_BASIC_AUTH = Buffer.from(
       `${process.env.SRVTILBAKEMELDINGER_API_USERNAME}:${process.env.SRVTILBAKEMELDINGER_API_PASSWORD}`
