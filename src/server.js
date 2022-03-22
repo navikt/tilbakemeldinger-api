@@ -4,9 +4,7 @@ require("dotenv").config();
 
 // Imports
 const { createProxyMiddleware } = require("http-proxy-middleware");
-const cookies = require("cookie-parser");
 const express = require("express");
-const cors = require("cors");
 const { setMottakProxyHeaders } = require("./headers");
 const { getStsToken } = require("./ststoken");
 
@@ -14,17 +12,7 @@ const { getStsToken } = require("./ststoken");
 const port = 8080;
 const app = express();
 
-if (process.env.ENV === "dev") {
-  app.use(
-    cors({
-      origin: ["https://person.dev.nav.no", "https://www.dev.nav.no"],
-      credentials: true,
-    })
-  );
-}
-
 // Nais
-app.use(cookies());
 app.get(`/internal/isAlive`, (req, res) => res.sendStatus(200));
 app.get(`/internal/isReady`, (req, res) => res.sendStatus(200));
 
