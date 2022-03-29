@@ -1,5 +1,4 @@
-#name: Deploy-to-dev-fss
-name: Deploy-to-dev-sbs
+name: Deploy-to-dev-fss
 on:
   workflow_dispatch
 
