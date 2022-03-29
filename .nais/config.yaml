@@ -15,20 +15,31 @@ spec:
      - {{url}}
   {{/each}}
   liveness:
-    path: /person/tilbakemeldinger-api/internal/isAlive
+    path: /internal/isAlive
     initialDelay: 10
   readiness:
-    path: /person/tilbakemeldinger-api/internal/isReady
+    path: /internal/isReady
     initialDelay: 10
   replicas:
     min: 2
     max: 4
   webproxy: true
+  accessPolicy:
+    inbound:
+      rules:
+        - application: tilbakemeldinger
+          namespace: personbruker
+          cluster: {{ gcp-cluster }}
+        - application: samisk-samtale-bestilling
+          namespace: personbruker
+          cluster: {{ gcp-cluster }}
   env:
     - name: NODE_EXTRA_CA_CERTS
       value: "/etc/ssl/ca-bundle.pem"
   envFrom:
     - secret: tilbakemeldinger
+  vault:
+    enabled: true
   resources:
     limits:
       cpu: '3'

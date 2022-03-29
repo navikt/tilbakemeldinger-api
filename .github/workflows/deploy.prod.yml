@@ -6,7 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: prod-sbs:personbruker
+    environment: prod-fss:personbruker
     steps:
       - uses: actions/checkout@v1
       - name: Abort if branch is not master
@@ -25,12 +25,9 @@ jobs:
         run: |
           cat > .env <<EOF
           ENV=prod
-          ENHETERRS_URL=https://api-gw.oera.no/oppdaterenhetsinfo/api/hentenheter/
-          TILBAKEMELDINGSMOTTAK_URL=https://api-gw.oera.no/tilbakemeldingsmottak/rest/
-          SECURITY_TOKEN_SERVICE_TOKEN_URL=https://api-gw.oera.no/security-token-service/rest/v1/sts/token/
-          TILBAKEMELDINGER_API_ENHETERRS_APIKEY_USERNAME=x-nav-apiKey
-          TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_USERNAME=x-nav-apiKey
-          TILBAKEMELDINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_USERNAME=x-nav-apiKey
+          ENHETERRS_URL=https://oppdaterenhetsinfo.nais.adeo.no/oppdaterenhetsinfo/api/hentenheter/
+          TILBAKEMELDINGSMOTTAK_URL=https://tilbakemeldingsmottak.intern.nav.no/rest/
+          SECURITY_TOKEN_SERVICE_TOKEN_URL=https://security-token-service.nais.adeo.no/rest/v1/sts/token/
           SRVTILBAKEMELDINGER_API_USERNAME=srvtilbakemeldinge
           EOF
       - uses: actions/cache@v2
@@ -51,14 +48,14 @@ jobs:
           cat > .nais/vars.yaml <<EOF
           namespace: personbruker
           ingresses:
-            - https://tilbakemeldinger-api.nais.oera.no
-            - https://www.nav.no/person/tilbakemeldinger-api
+            - https://tilbakemeldinger-api.prod-fss-pub.nais.io
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
+          gcp-cluster: prod-gcp
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:
-          CLUSTER: prod-sbs
+          CLUSTER: prod-fss
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: .nais/config.yaml
           VARS: .nais/vars.yaml

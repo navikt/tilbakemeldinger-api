@@ -2,15 +2,13 @@
   Set headers for proxy requests
  */
 
-const setEnheterProxyHeaders = (proxyReq, req, res) => {
-    proxyReq.setHeader(
-        process.env.TILBAKEMELDINGER_API_ENHETERRS_APIKEY_USERNAME,
-        process.env.TILBAKEMELDINGER_API_ENHETERRS_APIKEY_PASSWORD
-    );
-};
-
 const setMottakProxyHeaders = (proxyReq, req, res) => {
-    const userToken = req.cookies["selvbetjening-idtoken"];
+    let userToken = req.headers.authorization;
+
+    if (userToken && userToken.startsWith("Bearer ")) {
+        userToken = userToken.substring(7, userToken.length)
+    }
+
     const stsToken = req.access_token;
     const authTokens = [];
 
@@ -25,18 +23,8 @@ const setMottakProxyHeaders = (proxyReq, req, res) => {
     if (authTokens.length > 0) {
         proxyReq.setHeader("Authorization", authTokens.join());
     }
-
-    proxyReq.setHeader(
-        process.env.TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_USERNAME,
-        process.env.TILBAKEMELDINGER_API_TILBAKEMELDINGSMOTTAK_APIKEY_PASSWORD
-    );
-
-    Object.keys(req.headers).forEach(key => {
-        proxyReq.setHeader(key, req.headers[key]);
-    });
 };
 
 module.exports = {
-    setEnheterProxyHeaders,
     setMottakProxyHeaders
 };
