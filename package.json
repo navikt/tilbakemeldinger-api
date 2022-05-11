@@ -29,7 +29,7 @@
     "console-stamp": "^3.0.2",
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
-    "http-proxy-middleware": "^2.0.4",
+    "http-proxy-middleware": "^2.0.6",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
