@@ -17,7 +17,6 @@ Kopier .env.sample til .env og skriv inn reelle miljøvariabler:
 
 ```
 TILBAKEMELDINGSMOTTAK_URL // URL til API-endepunktet for tilbakemeldingsmottak
-ENHETERRS_URL // URL til API-endepunktet for enhetsinformasjon
 ```
 
 Installer nødvendige avhengigheter:
