@@ -25,7 +25,6 @@ jobs:
         run: |
           cat > .env <<EOF
           ENV=prod
-          ENHETERRS_URL=https://oppdaterenhetsinfo.nais.adeo.no/oppdaterenhetsinfo/api/hentenheter/
           TILBAKEMELDINGSMOTTAK_URL=https://tilbakemeldingsmottak.intern.nav.no/rest/
           SECURITY_TOKEN_SERVICE_TOKEN_URL=https://security-token-service.nais.adeo.no/rest/v1/sts/token/
           SRVTILBAKEMELDINGER_API_USERNAME=srvtilbakemeldinge

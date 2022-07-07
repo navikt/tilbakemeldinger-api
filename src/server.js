@@ -18,14 +18,6 @@ app.get(`/internal/isReady`, (req, res) => res.sendStatus(200));
 
 // Proxied requests
 app.use(
-  createProxyMiddleware(`/enheter`, {
-    target: process.env.ENHETERRS_URL,
-    pathRewrite: { [`^/enheter`]: "" },
-    changeOrigin: true,
-  })
-);
-
-app.use(
   getStsToken(`/mottak`),
   createProxyMiddleware(`/mottak`, {
     target: process.env.TILBAKEMELDINGSMOTTAK_URL,
