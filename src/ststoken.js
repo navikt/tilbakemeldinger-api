@@ -1,8 +1,9 @@
 /*
   Set headers for proxy requests
  */
+import fetch from "node-fetch";
 
-const getStsToken = context => async (req, res, next) => {
+const getStsToken = (context) => async (req, res, next) => {
   if (req.originalUrl.includes(context)) {
     const STS_BASIC_AUTH = Buffer.from(
       `${process.env.SRVTILBAKEMELDINGER_API_USERNAME}:${process.env.SRVTILBAKEMELDINGER_API_PASSWORD}`
@@ -14,18 +15,17 @@ const getStsToken = context => async (req, res, next) => {
     };
 
     const STS_OPTIONS = {
-      headers: STS_HEADERS
+      headers: STS_HEADERS,
     };
 
     const STS_URL = `${process.env.SECURITY_TOKEN_SERVICE_TOKEN_URL}?grant_type=client_credentials&scope=openid`;
-    let fetch = await import('node-fetch');
-      await fetch.default(STS_URL, STS_OPTIONS)
-      .then(stsRes => stsRes.json())
-      .then(stsRes => {
+    await fetch(STS_URL, STS_OPTIONS)
+      .then((stsRes) => stsRes.json())
+      .then((stsRes) => {
         req.access_token = stsRes.access_token;
         next();
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
         res.sendStatus(500);
       });
