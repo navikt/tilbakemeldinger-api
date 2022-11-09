@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 /*
   Set headers for proxy requests
  */
@@ -19,7 +18,8 @@ const getStsToken = context => async (req, res, next) => {
     };
 
     const STS_URL = `${process.env.SECURITY_TOKEN_SERVICE_TOKEN_URL}?grant_type=client_credentials&scope=openid`;
-    await fetch(STS_URL, STS_OPTIONS)
+    let node = await import('node-fetch');
+      await node.fetch(STS_URL, STS_OPTIONS)
       .then(stsRes => stsRes.json())
       .then(stsRes => {
         req.access_token = stsRes.access_token;
