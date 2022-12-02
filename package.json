@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/navikt/tilbakemeldinger-api#readme",
   "dependencies": {
-    "console-stamp": "3.0.6",
+    "console-stamp": "3.1.0",
     "dotenv": "16.0.3",
     "express": "4.18.2",
     "http-proxy-middleware": "2.0.6",
