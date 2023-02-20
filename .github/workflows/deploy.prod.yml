@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod-fss:personbruker
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Abort if branch is not master
         if: github.event.release.target_commitish != 'master'
         run: echo "Release is not on master, aborting"; exit 1;
@@ -29,7 +29,7 @@ jobs:
           SECURITY_TOKEN_SERVICE_TOKEN_URL=https://security-token-service.nais.adeo.no/rest/v1/sts/token/
           SRVTILBAKEMELDINGER_API_USERNAME=srvtilbakemeldinge
           EOF
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
