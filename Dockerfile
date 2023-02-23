@@ -4,8 +4,8 @@ RUN apk add --no-cache curl
 ENV NODE_ENV production
 
 WORKDIR usr/src/app
-COPY . .
-RUN npm install
+COPY node_modules node_modules/
+COPY src src/
 
 CMD ["node", "src/server.js"]
 
