@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev-fss:personbruker
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Define build environment
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -26,7 +26,7 @@ jobs:
           SECURITY_TOKEN_SERVICE_TOKEN_URL=https://security-token-service.dev.adeo.no/rest/v1/sts/token/
           SRVTILBAKEMELDINGER_API_USERNAME=srvtilbakemeldinge
           EOF
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}

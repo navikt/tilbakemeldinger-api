@@ -1,11 +1,12 @@
-FROM node:14-alpine
+FROM node:18-alpine
 RUN apk add --no-cache bash
 RUN apk add --no-cache curl
 ENV NODE_ENV production
 
 WORKDIR usr/src/app
-COPY . .
-RUN npm install
+COPY node_modules node_modules/
+COPY src src/
+COPY .env ./
 
 CMD ["node", "src/server.js"]
 

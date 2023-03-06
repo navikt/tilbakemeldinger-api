@@ -1,6 +1,6 @@
 {
   "name": "tilbakemeldinger-api",
-  "version": "2.0.3-prod",
+  "version": "2.1.5-prod",
   "description": "Proxy mot FSS for tilbakemeldinger",
   "main": "src/server.js",
   "scripts": {
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/navikt/tilbakemeldinger-api#readme",
   "dependencies": {
-    "console-stamp": "3.1.0",
+    "console-stamp": "3.1.1",
     "dotenv": "16.0.3",
     "express": "4.18.2",
     "http-proxy-middleware": "2.0.6",
@@ -34,6 +34,6 @@
   },
   "devDependencies": {
     "nodemon": "2.0.20",
-    "prettier": "2.8.1"
+    "prettier": "2.8.4"
   }
 }
