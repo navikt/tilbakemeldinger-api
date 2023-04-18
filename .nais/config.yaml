@@ -20,9 +20,6 @@ spec:
   readiness:
     path: /internal/isReady
     initialDelay: 10
-  replicas:
-    min: 2
-    max: 4
   webproxy: true
   accessPolicy:
     inbound:
@@ -40,9 +37,14 @@ spec:
     - secret: tilbakemeldinger
   vault:
     enabled: true
+  replicas:
+  {{#with replicas}}
+    min: {{min}}
+    max: {{max}}
+  {{/with}}
   resources:
     limits:
-      cpu: '3'
-      memory: 1500Mi
+      memory: 256Mi
     requests:
-      memory: 1500Mi
+      cpu: {{ cpuReq }}
+      memory: 128Mi

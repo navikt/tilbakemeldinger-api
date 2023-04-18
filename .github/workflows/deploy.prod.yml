@@ -51,6 +51,10 @@ jobs:
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           gcp-cluster: prod-gcp
+          cpuReq: 50m
+          replicas:
+            min: 2
+            max: 4
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:
